@@ -1,0 +1,54 @@
+1. Voraussetzungen
+Zwei Web Apps in unterschiedlichen Regionen:
+	Erstellen Sie die erste Web App, z. B. in West Europe.
+	Erstellen Sie die zweite Web App, z. B. in East US.
+
+Traffic Manager-Profil:
+	Ein Traffic Manager-Profil in Azure erstellen.
+	DNS-Namen für die Apps:
+
+Jede Web App erhält automatisch einen DNS-Namen wie myapp1.azurewebsites.net.
+
+2. Schritt: Zweite Web App erstellen
+Im Azure-Portal anmelden:
+	Gehen Sie zu App Services und klicken Sie auf + Erstellen.
+
+Konfiguration der Web App:
+	Wählen Sie eine andere Region aus (z. B. East US).
+	Verwenden Sie denselben Code oder eine Testseite, um später die Weiterleitung zu überprüfen.
+
+Veröffentlichung sicherstellen:
+	Beide Apps sollten im Internet erreichbar sein. Testen Sie die URLs im Browser.
+
+3. Schritt: Traffic Manager-Profil erstellen
+Traffic Manager im Azure-Portal suchen:
+	Geben Sie "Traffic Manager" in die Suchleiste ein und wählen Sie + Profil erstellen.
+
+Traffic Manager-Profil konfigurieren:
+	Name: Geben Sie einen eindeutigen Namen ein (z. B. mytrafficmanager).
+	Routing-Methode: Wählen Sie Geografie (Geographic) aus.
+	Abonnement und Ressourcengruppe: Wählen Sie die gleiche Ressourcengruppe wie Ihre Web Apps.
+	Erstellen klicken.
+
+4. Schritt: Endpunkte hinzufügen
+	Öffnen Sie das Traffic Manager-Profil und navigieren Sie zu Konfiguration > Endpunkte.
+	Klicken Sie auf + Hinzufügen.
+	Endpunkttyp: Wählen Sie Azure-Endpunkt.
+	Name: Geben Sie einen Namen wie App1-Europe ein.
+	Zielressource: Wählen Sie Ihre erste Web App in West Europe.
+	Priorität: Keine Änderung nötig.
+	Fügen Sie nun die zweite Web App in East US als weiteren Endpunkt hinzu.
+
+5. Schritt: Geografisches Routing einrichten
+	Im Traffic Manager-Profil gehen Sie zu Geografie > Hinzufügen.
+	Konfigurieren Sie Geolokalisierungsregeln:
+	Region auswählen:
+	Europa → Weiterleitung zur Web App in West Europe.
+	Nordamerika → Weiterleitung zur Web App in East US.
+	Regeln speichern.
+
+6. Schritt: DNS konfigurieren
+Traffic Manager DNS-Namen:
+	Im Traffic Manager-Profil finden Sie eine DNS-Adresse, z. B. mytrafficmanager.trafficmanager.net.
+	Eigene Domain verwenden (optional):
+	Konfigurieren Sie Ihren Domain-Registrar so, dass er auf die Traffic Manager-DNS-Adresse zeigt.
